@@ -2,12 +2,12 @@ clc
 clear all
 close all
 
-m = 0.294;
-M =  0.378;
-
+%m = 0.294;
+%M =  0.378;
+%L = 0.14;
 g = -9.82;
 %{
-L = 0.14;
+
 d = 0.01;
 %}
 
@@ -29,6 +29,16 @@ A = [0 1 0 0;
 
 B = [0; 1/M; 0; s*1/(M*L)];
 
+C = [1 0 0 0];
+
+D = zeros(size(C,1), size(B,2));
+
+linSys = ss(A,B,C,D);
+Am = linSys.a;
+Bm = linSys.b;
+Cm = linSys.c;
+Dm = linSys.d;
+
 %% System analysis
 
 eig(A)
@@ -49,7 +59,7 @@ K = lqr(A,B,Q,R)
 eig(A-B*K)
 
 %% Observability
-C = [1 0 0 0]
+
 D = zeros(size(C,1), size(B,2));
 ObsvMatr = obsv(A,C);
 rank(ObsvMatr);
@@ -70,15 +80,27 @@ sysKF = ss(A-Kf*C, [B Kf], eye(4), 0*[B Kf]);
 
 dt = 0.01;
 t= dt:dt:50;
-uDIST = rand(4,size(t,2));
-uNOISE = rand(size(t));
+uDIST = randn(4,size(t,2));
+uNOISE = randn(size(t));
 
 u= 0*t;
 u(100:120) = 100;
 u(1500:1520) = -100;
 
 uAUG = [u; Vd*Vd*uDIST; uNOISE];
-[]
+[y,t] = lsim(sysC, uAUG, t);
+plot(t,y);
+
+[xtrue,t] = lsim(sysFullOutput, uAUG, t);
+hold
+plot(t, xtrue(:,1),'r','LineWidth', 2.0)
+
+[x,t] = lsim(sysKF, [u; y'], t);
+plot(t,x(:,1),'k--', 'LineWidth', 2.0)
+
+figure
+plot(t, xtrue, '-', t,x,'--', 'LineWidth', 2)
+
 
 
 

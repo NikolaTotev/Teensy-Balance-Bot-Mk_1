@@ -18,7 +18,7 @@ L = 2;
 d = 1;
 
 
-s = -1; % pend up => (s=1)
+s = 1; % pend up => (s=1)
 
 %% System matrices
 
@@ -28,6 +28,18 @@ A = [0 1 0 0;
      0 -s*d/(M*L) -s*(m+M)*g/(M*L) 0];
 
 B = [0; 1/M; 0; s*1/(M*L)];
+
+C = [1 0 0 0];
+
+D = zeros(size(C,1), size(B,2));
+
+linSys = ss(A,B,C,D);
+Am = linSys.a;
+Bm = linSys.b;
+Cm = linSys.c;
+Dm = linSys.d;
+
+x0 = [0; 5*pi/180; 0; 0.5;];
 
 %% System analysis
 
@@ -49,7 +61,7 @@ K = lqr(A,B,Q,R)
 eig(A-B*K)
 
 %% Observability
-C = [1 0 0 0]
+
 D = zeros(size(C,1), size(B,2));
 ObsvMatr = obsv(A,C);
 rank(ObsvMatr);
