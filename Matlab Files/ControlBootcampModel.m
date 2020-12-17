@@ -18,7 +18,7 @@ L = 2;
 d = 1;
 
 
-s = 1; % pend up => (s=1)
+s = -1; % pend up => (s=1)
 
 %% System matrices
 
@@ -29,7 +29,7 @@ A = [0 1 0 0;
 
 B = [0; 1/M; 0; s*1/(M*L)];
 
-C = [1 0 0 0];
+C = [1 1 1 1];
 
 D = zeros(size(C,1), size(B,2));
 
@@ -39,7 +39,7 @@ Bm = linSys.b;
 Cm = linSys.c;
 Dm = linSys.d;
 
-x0 = [0; 5*pi/180; 0; 0.5;];
+x0 = [0; 0; pi; .5];
 
 %% System analysis
 
@@ -48,12 +48,15 @@ Ctrb_Mat = ctrb(A,B);
 rank(Ctrb_Mat)
 
 %% Pole placement 
-desEigs = [-1; -2; -3; -4];
-K = place(A,B, desEigs)
+%desEigs = [-1; -2; -3; -4];
+%K = place(A,B, desEigs)
 
 %% LQR
 
-Q = eye(4);
+Q = [1 0 0 0;
+     0 1 0 0;
+     0 0 10 0;
+     0 0 0 100;];
 R = 0.01;
 
 K = lqr(A,B,Q,R)
@@ -104,6 +107,8 @@ figure
 plot(t, xtrue, '-', t,x,'--', 'LineWidth', 2)
 
 
+%% Eig Test
+eigs(A-B*K)
 
 
 
