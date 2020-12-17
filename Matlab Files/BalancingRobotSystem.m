@@ -28,9 +28,10 @@ D = 0
 
 %% Sys build
 sys = ss(A, B, C, D)
+eig(A) 
 
 %% Sys analysis 
-eig(A) 
+
 pole(sys) %Either of the two commands find the poles of the system. We do this to check if the system is stable or not
 ControlabilityMatrix = ctrb(sys) 
 ObvservabilityMatrix = obsv(sys)
