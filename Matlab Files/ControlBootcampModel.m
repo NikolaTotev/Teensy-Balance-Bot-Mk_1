@@ -7,7 +7,6 @@ close all
 %L = 0.14;
 g = -9.82;
 %{
-
 d = 0.01;
 %}
 
@@ -18,7 +17,7 @@ L = 2;
 d = 1;
 
 
-s = -1; % pend up => (s=1)
+s = 1; % pend up => (s=1)
 
 %% System matrices
 
@@ -33,12 +32,13 @@ C = [1 1 1 1];
 
 D = zeros(size(C,1), size(B,2));
 
+%{
 linSys = ss(A,B,C,D);
 Am = linSys.a;
 Bm = linSys.b;
 Cm = linSys.c;
 Dm = linSys.d;
-
+%}
 x0 = [0; 0; pi; .5];
 
 %% System analysis
@@ -55,15 +55,15 @@ rank(Ctrb_Mat)
 
 Q = [1 0 0 0;
      0 1 0 0;
-     0 0 10 0;
-     0 0 0 100;];
+     0 0 100 0;
+     0 0 0 1;];
 R = 0.01;
 
-K = lqr(A,B,Q,R)
+K = lqr(A,B,Q,R);
 
 eig(A-B*K)
 
-%% Observability
+%% Observability test
 
 D = zeros(size(C,1), size(B,2));
 ObsvMatr = obsv(A,C);
@@ -78,7 +78,6 @@ sysC = ss(A,BF,C,[0 0 0 0 0 Vn]);
 sysFullOutput = ss(A, BF, eye(4), zeros(4,size(BF,2)));
 
 %% Kalman Filter 
-
 Kf = (lqr(A', C', Vd, Vn))';
 
 sysKF = ss(A-Kf*C, [B Kf], eye(4), 0*[B Kf]);
@@ -105,10 +104,6 @@ plot(t,x(:,1),'k--', 'LineWidth', 2.0)
 
 figure
 plot(t, xtrue, '-', t,x,'--', 'LineWidth', 2)
-
-
-%% Eig Test
-eigs(A-B*K)
 
 
 
