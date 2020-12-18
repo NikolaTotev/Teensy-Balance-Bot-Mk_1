@@ -1,7 +1,7 @@
 clc 
 clear all
 close all
-
+%% 
 %m = 0.294;
 %M =  0.378;
 %L = 0.14;
@@ -15,30 +15,40 @@ M = 5;
 L = 2;
 %g = -10;
 d = 1;
-
+d1 = 0.01;
+d2 = 0.01;
 
 s = 1; % pend up => (s=1)
 
 %% System matrices
 
+
 A = [0 1 0 0;
-     0 -d/M -m*g/M 0;
-     0 0 0 1
-     0 -s*d/(M*L) -s*(m+M)*g/(M*L) 0];
+     0 -d/M -(m*g)/M 0;
+     0 0 0 1;
+     0 -(s*d)/(M*L) -(s*(m+M)*g)/(M*L) 0];
 
-B = [0; 1/M; 0; s*1/(M*L)];
+B = [0; 1/M; 0; (s*1)/(M*L)];
 
-C = [1 1 1 1];
+%{
+A = [0, 0 ,1, 0;   
+     0, (g*m)/M, -d1/M, -d2/(L*M);   
+     0, 0, 0 ,1;     
+     0, (g*(M+m))/(L*M), -d1/(L*M), (-d2*(M+m))/(L*L*M*m)];
+ 
+B = [0; 0; 1/M; 1/(L*M)];
+%}
+C = [1,1,1,1];
 
 D = zeros(size(C,1), size(B,2));
 
-%{
+
 linSys = ss(A,B,C,D);
 Am = linSys.a;
 Bm = linSys.b;
 Cm = linSys.c;
 Dm = linSys.d;
-%}
+
 x0 = [0; 0; pi; .5];
 
 %% System analysis
@@ -55,9 +65,9 @@ rank(Ctrb_Mat)
 
 Q = [1 0 0 0;
      0 1 0 0;
-     0 0 100 0;
+     0 0 1 0;
      0 0 0 1;];
-R = 0.01;
+R = 1;
 
 K = lqr(A,B,Q,R);
 

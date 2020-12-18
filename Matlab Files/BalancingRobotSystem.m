@@ -14,11 +14,11 @@ s = -1;
 %mp = m
 %% Sys matrices 
 A = [0, 0 ,1, 0; 
-      0, 0, 0 ,1;
-      0, (g*mp)/mc, -d1/mc, -d2/(L*mc);
-      0, (g*(mc+mp))/(L*mc), -d1/(L*mc), (-d2*(mc+mp))/(L*L*mc*mp)];
+     0, (g*mp)/mc, -d1/mc, -d2/(L*mc);    
+     0, 0, 0 ,1;
+     0, (g*(mc+mp))/(L*mc), -d1/(L*mc), (-d2*(mc+mp))/(L*L*mc*mp)];
  
-B = [0; 0; 1/mc;1/(L*mc)];
+B = [0; 0; 1/mc; 1/(L*mc)];
 
 
 
