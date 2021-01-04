@@ -9,7 +9,6 @@
 #include "IMU.h"
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
-#include  "Receiver.h"
 
 #define GyroPart 0.98
 #define AccelPart 0.02
