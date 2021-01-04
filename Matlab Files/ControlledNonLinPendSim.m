@@ -14,7 +14,6 @@ for k=1:100:length(t)
     DrawPend(y(k,:),m,M,L);
 end
 
-%{
+
 figure 
 plot(t,y);
-%}
