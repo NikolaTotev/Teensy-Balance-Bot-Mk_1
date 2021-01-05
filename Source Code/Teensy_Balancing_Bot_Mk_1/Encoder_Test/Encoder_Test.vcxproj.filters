@@ -16,6 +16,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Encoder_Test.ino" />
+    <None Include="src\arduino folders read me.txt">
+      <Filter>Misc Files</Filter>
+    </None>
   </ItemGroup>
- 
 </Project>

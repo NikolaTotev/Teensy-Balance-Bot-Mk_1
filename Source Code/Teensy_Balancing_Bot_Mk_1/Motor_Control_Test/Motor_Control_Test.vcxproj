@@ -58,6 +58,7 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="Libraries\Cytron_Motor_Drivers_Library\1.0.1\Cytron_Motor_Drivers_Library\Cytron_Motor_Drivers_Library-1.0.1.vcxitems" Label="Shared" />
+    <Import Project="Libraries\Wire\1.0\Wire\Wire-1.0.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -78,7 +79,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Motor_Control_Test;$(ProjectDir)Libraries\Cytron_Motor_Drivers_Library\1.0.1\Cytron_Motor_Drivers_Library;C:\Program Files (x86)\Arduino\hardware\teensy\avr\cores\teensy4;C:\Program Files (x86)\Arduino\hardware\teensy\avr\cores\teensy4\avr;C:\Program Files (x86)\Arduino\hardware\teensy\avr\cores\teensy4\debug;C:\Program Files (x86)\Arduino\hardware\teensy\avr\cores\teensy4\util;C:\Program Files (x86)\Arduino\hardware\tools\arm\arm-none-eabi\include;C:\Program Files (x86)\Arduino\hardware\tools\arm\lib\gcc\arm-none-eabi\5.4.1\include;C:\Program Files (x86)\Arduino\hardware\tools\arm\arm-none-eabi\include\c++\5.4.1;C:\Program Files (x86)\Arduino\hardware\tools\arm\arm-none-eabi\include\c++\5.4.1\tr1;C:\Program Files (x86)\Arduino\hardware\tools\arm\arm-none-eabi\include\c++\5.4.1\bits;C:\Program Files (x86)\Arduino\hardware\tools\arm\arm-none-eabi\include\c++\5.4.1\arm-none-eabi;C:\Program Files (x86)\Arduino\hardware\teensy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Motor_Control_Test;$(ProjectDir)Libraries\Cytron_Motor_Drivers_Library\1.0.1\Cytron_Motor_Drivers_Library;$(ProjectDir)Libraries\Wire\1.0\Wire;$(ProjectDir)Libraries\Wire\1.0\Wire\utility;C:\Program Files (x86)\Arduino\hardware\teensy\avr\cores\teensy4;C:\Program Files (x86)\Arduino\hardware\teensy\avr\cores\teensy4\avr;C:\Program Files (x86)\Arduino\hardware\teensy\avr\cores\teensy4\debug;C:\Program Files (x86)\Arduino\hardware\teensy\avr\cores\teensy4\util;C:\Program Files (x86)\Arduino\hardware\tools\arm\arm-none-eabi\include;C:\Program Files (x86)\Arduino\hardware\tools\arm\lib\gcc\arm-none-eabi\5.4.1\include;C:\Program Files (x86)\Arduino\hardware\tools\arm\arm-none-eabi\include\c++\5.4.1;C:\Program Files (x86)\Arduino\hardware\tools\arm\arm-none-eabi\include\c++\5.4.1\tr1;C:\Program Files (x86)\Arduino\hardware\tools\arm\arm-none-eabi\include\c++\5.4.1\bits;C:\Program Files (x86)\Arduino\hardware\tools\arm\arm-none-eabi\include\c++\5.4.1\arm-none-eabi;C:\Program Files (x86)\Arduino\hardware\teensy;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.Motor_Control_Test.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
       <PreprocessorDefinitions>__HARDWARE_imxrt1062__;__HARDWARE_IMXRT1062__;_VMDEBUG=1;__IMXRT1062__;TEENSYDUINO=153;ARDUINO=108013;ARDUINO_TEENSY41;F_CPU=600000000;USB_SERIAL;LAYOUT_US_ENGLISH;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -117,7 +118,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="i2c_utils.h" />
     <ClInclude Include="__vm\.Motor_Control_Test.vsarduino.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="i2c_utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
