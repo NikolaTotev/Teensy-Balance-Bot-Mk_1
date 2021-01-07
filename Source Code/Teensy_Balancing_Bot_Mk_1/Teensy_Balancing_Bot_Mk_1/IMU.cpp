@@ -12,73 +12,6 @@ IMU::IMU(Adafruit_SSD1306* disp, byte useDisp)
 void IMU::Ctor()
 {
 
-
-	display->clearDisplay();
-	display->setCursor(0, 0);
-	display->setTextSize(2); // Draw 2X-scale text
-	display->setTextColor(SSD1306_WHITE);
-	display->println("Starting");
-	display->println("IMU");
-	display->display();
-	Serial.println("Starting IMU");
-	delay(1000);
-
-
-
-	display->clearDisplay();
-	display->setCursor(0, 0);
-	display->setTextSize(2); // Draw 2X-scale text
-	display->setTextColor(SSD1306_WHITE);
-	display->println("Starting");
-	display->println("I2C");
-	display->display();
-	Serial.println("Starting i2c");
-	delay(500);
-	i2c_begin();
-
-
-
-	display->clearDisplay();
-	display->setCursor(0, 0);
-	display->setTextSize(2); // Draw 2X-scale text
-	display->setTextColor(SSD1306_WHITE);
-	display->println("Testing");
-	display->println("IMU");
-	display->display();
-
-	Serial.println("Testing IMU");
-	delay(500);
-	TestIMU();
-
-
-
-	display->clearDisplay();
-	display->setCursor(0, 0);
-	display->setTextSize(2); // Draw 2X-scale text
-	display->setTextColor(SSD1306_WHITE);
-	display->println("Register");
-	display->println("init.");
-	display->display();
-
-	Serial.println("Register init.");
-
-	delay(500);
-
-	IMUInit();
-
-
-
-	display->clearDisplay();
-	display->setCursor(0, 0);
-	display->setTextSize(2); // Draw 2X-scale text
-	display->setTextColor(SSD1306_WHITE);
-	display->println("Starting");
-	display->println("gyro calib");
-	display->display();
-
-	Serial.println("Starting gyro calibration.");
-	delay(500);
-	GyroCalib();
 }
 
 void IMU::TestIMU()
@@ -123,6 +56,83 @@ void IMU::TestIMU()
 
 //Initialize the IMU registers.
 void IMU::IMUInit()
+{
+
+	display->clearDisplay();
+	display->setCursor(0, 0);
+	display->setTextSize(2); // Draw 2X-scale text
+	display->setTextColor(SSD1306_WHITE);
+	display->println("Starting");
+	display->println("IMU");
+	display->display();
+	Serial.println("Starting IMU");
+	delay(1000);
+
+
+
+	display->clearDisplay();
+	display->setCursor(0, 0);
+	display->setTextSize(2); // Draw 2X-scale text
+	display->setTextColor(SSD1306_WHITE);
+	display->println("Starting");
+	display->println("I2C");
+	display->display();
+	Serial.println("Starting i2c");
+	delay(500);
+	i2c_begin();
+
+
+
+	display->clearDisplay();
+	display->setCursor(0, 0);
+	display->setTextSize(2); // Draw 2X-scale text
+	display->setTextColor(SSD1306_WHITE);
+	display->println("Testing");
+	display->println("IMU");
+	display->display();
+
+	Serial.println("Testing IMU");
+	delay(500);
+	TestIMU();
+
+	display->clearDisplay();
+	display->setCursor(0, 0);
+	display->setTextSize(2); // Draw 2X-scale text
+	display->setTextColor(SSD1306_WHITE);
+	display->println("Register");
+	display->println("init.");
+	display->display();
+	RegisterInit();
+	Serial.println("Register init.");
+
+	delay(500);
+
+	display->clearDisplay();
+	display->setCursor(0, 0);
+	display->setTextSize(2); // Draw 2X-scale text
+	display->setTextColor(SSD1306_WHITE);
+	display->println("Starting");
+	display->println("gyro calib");
+	display->display();
+
+	Serial.println("Starting gyro calibration.");
+	delay(500);
+	GyroCalib();
+	
+	display->clearDisplay();
+	display->setCursor(0, 0);
+	display->setTextSize(2); // Draw 2X-scale text
+	display->setTextColor(SSD1306_WHITE);
+	display->println("IMU Started");
+	display->println("Ready for use");
+	display->display();
+
+	Serial.println("IMU Started!");
+	delay(500);
+
+}
+
+void RegisterInit()
 {
 	i2c_registerWrite(Reg_Ctrl2_G, Gyro_ODR, I2C_Addr);
 	i2c_registerWrite(Reg_Ctrl1_XL, Accel_ODR, I2C_Addr);
