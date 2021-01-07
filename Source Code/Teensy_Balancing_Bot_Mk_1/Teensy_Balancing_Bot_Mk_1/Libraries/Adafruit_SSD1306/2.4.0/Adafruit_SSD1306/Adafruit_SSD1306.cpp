@@ -528,7 +528,7 @@ bool Adafruit_SSD1306::begin(uint8_t vcs, uint8_t addr, bool reset,
 
   TRANSACTION_START
 
-  // Init sequence
+  // IMUInit sequence
   static const uint8_t PROGMEM init1[] = {SSD1306_DISPLAYOFF,         // 0xAE
                                           SSD1306_SETDISPLAYCLOCKDIV, // 0xD5
                                           0x80, // the suggested ratio 0x80

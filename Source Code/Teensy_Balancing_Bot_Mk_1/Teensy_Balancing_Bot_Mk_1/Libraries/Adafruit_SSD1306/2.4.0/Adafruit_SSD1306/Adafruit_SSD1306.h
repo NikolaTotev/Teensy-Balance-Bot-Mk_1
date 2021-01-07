@@ -97,10 +97,10 @@ typedef uint32_t PortMask;
 #define SSD1306_EXTERNALVCC 0x01  ///< External display voltage source
 #define SSD1306_SWITCHCAPVCC 0x02 ///< Gen. display voltage from 3.3V
 
-#define SSD1306_RIGHT_HORIZONTAL_SCROLL 0x26              ///< Init rt scroll
-#define SSD1306_LEFT_HORIZONTAL_SCROLL 0x27               ///< Init left scroll
-#define SSD1306_VERTICAL_AND_RIGHT_HORIZONTAL_SCROLL 0x29 ///< Init diag scroll
-#define SSD1306_VERTICAL_AND_LEFT_HORIZONTAL_SCROLL 0x2A  ///< Init diag scroll
+#define SSD1306_RIGHT_HORIZONTAL_SCROLL 0x26              ///< IMUInit rt scroll
+#define SSD1306_LEFT_HORIZONTAL_SCROLL 0x27               ///< IMUInit left scroll
+#define SSD1306_VERTICAL_AND_RIGHT_HORIZONTAL_SCROLL 0x29 ///< IMUInit diag scroll
+#define SSD1306_VERTICAL_AND_LEFT_HORIZONTAL_SCROLL 0x2A  ///< IMUInit diag scroll
 #define SSD1306_DEACTIVATE_SCROLL 0x2E                    ///< Stop scroll
 #define SSD1306_ACTIVATE_SCROLL 0x2F                      ///< Start scroll
 #define SSD1306_SET_VERTICAL_SCROLL_AREA 0xA3             ///< Set scroll range

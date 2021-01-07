@@ -529,7 +529,7 @@ void Adafruit_SPITFT::initSPI(uint32_t freq, uint8_t spiMode) {
   if (!freq)
     freq = DEFAULT_SPI_FREQ; // If no freq specified, use default
 
-  // Init basic control pins common to all connection types
+  // IMUInit basic control pins common to all connection types
   if (_cs >= 0) {
     pinMode(_cs, OUTPUT);
     digitalWrite(_cs, HIGH); // Deselect

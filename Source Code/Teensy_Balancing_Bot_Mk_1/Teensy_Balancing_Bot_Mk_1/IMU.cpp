@@ -55,7 +55,7 @@ void IMU::TestIMU()
 }
 
 //Initialize the IMU registers.
-void IMU::IMUInit()
+void IMU::Init()
 {
 
 	display->clearDisplay();

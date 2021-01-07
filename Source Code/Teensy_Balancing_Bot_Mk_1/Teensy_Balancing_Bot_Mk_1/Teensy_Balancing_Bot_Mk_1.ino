@@ -5,6 +5,8 @@
 */
 
 // the setup function runs once when you press reset or power the board
+#include "Encoder .h"
+#include "Position.h"
 #include "AngleMeasurement.h"
 #include <Adafruit_SPITFT_Macros.h>
 #include <Adafruit_SSD1306.h>
@@ -26,49 +28,58 @@
 #define OLED_RESET 4 
 
 
+float Angle_P_Gain = 0.0f;
+float Angle_D_Gain = 0.0f;
+float Angle_I_Gain = 0.0f;
 
-#define Angle_P_Gain = 0;
-#define Angle_D_Gain = 0;
-#define Angle_I_Gain = 0;
+float Pos_P_Gain = 0;
+float Pos_D_Gain = 0;
+float Pos_I_Gain = 0;
 
-#define Pos_P_Gain = 0;
-#define Pos_D_Gain = 0;
-#define Pos_I_Gain = 0;
+//Integrator anti-windup limits
+#define p_integMax 10
+#define p_integMin -10
+
+
+//PID time constants
+#define pidSampleTime 0.0032f //0.5 //In seconds
+#define pidSampleTimeMircos 3200 //500000
 
 void PIDInit();
 void AnglePIDUpdate(float currentAngle);
 void PositionPIDUpdate(float currentPosition);
 
 //Angle PID variables
-float a_pidSetpoint;
-float a_pidError;
-float a_pidPrevError;
-float a_pidPrevDPS;
+float p_pidSetpoint = 0;
+float p_pidError = 0;
+float p_pidPrevError = 0;
+float p_pidPrevDPS = 0;
 
-float a_pidProp;
+float p_pidProp = 0;
 
-float a_pidDeriv;
-float a_pidInteg;
+float p_pidDeriv = 0;
+float p_pidInteg = 0;
 
-float a_pidIntegState;
-float a_pidOutput;
-
+float p_pidIntegState = 0;
+float p_pidOutput = 0;
 
 //Position PID variables
-float p_pidSetpoint;
-float p_pidError;
-float p_pidPrevError;
-float p_pidPrevDPS;
+float p_pidSetpoint = 0;
+float p_pidError = 0;
+float p_pidPrevError = 0;
+float p_pidPrevDPS = 0;
 
-float p_pidProp;
+float p_pidProp = 0;
 
-float p_pidDeriv;
-float p_pidInteg;
+float p_pidDeriv = 0;
+float p_pidInteg = 0;
 
-float pidIntegState;
-float pidOutput;
+float p_pidIntegState = 0;
+float p_pidOutput = 0;
 
-float requiredMotorSpeed;
+
+
+float requiredMotorSpeed = 0;
 
 
 uint16_t currentPosition = 0;
@@ -83,10 +94,75 @@ Adafruit_SSD1306 currentDisplay = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, 
 IMU currentIMU = IMU(&currentDisplay, true);
 
 void setup() {
-	
+	currentIMU.Init();
 }
 
 // the loop function runs over and over again until power down or reset
 void loop() {
-  
+
 }
+
+void AnglePIDUpdate(float currentAngle)
+{
+	//Calculate the current error.
+	p_pidError = abs(p_pidSetpoint - abs(currentAngle));
+
+	//Calculate proportional response.
+	p_pidProp = Angle_P_Gain * p_pidError;
+
+	//Calculate integral response.
+	p_pidIntegState = p_pidIntegState + 0.5 * Angle_I_Gain * pidSampleTime * (p_pidError + p_pidPrevError);
+
+
+	if (p_pidIntegState > p_integMax)
+	{
+		p_pidIntegState = p_integMax;
+	}
+	else if (p_pidIntegState < p_integMin)
+	{
+		p_pidIntegState = p_integMin;
+	}
+
+	//Calculate derivative response. (0.5 comes from the formula for the derivative. 
+	p_pidDeriv = Angle_D_Gain * ((p_pidError - p_pidPrevError) / 0.5);
+
+	//Calculate final pid output.
+	p_pidOutput = p_pidProp + p_pidIntegState + p_pidDeriv;
+
+	//Remember previous values.
+	p_pidPrevError = p_pidError;
+	p_pidPrevDPS = currentAngle;
+}
+
+void PositionPIDUpdate(float currentPosition)
+{
+	//Calculate the current error.
+	p_pidError = abs(p_pidSetpoint - abs(currentAngle));
+
+	//Calculate proportional response.
+	p_pidProp = Angle_P_Gain * p_pidError;
+
+	//Calculate integral response.
+	p_pidIntegState = p_pidIntegState + 0.5 * Angle_I_Gain * pidSampleTime * (p_pidError + p_pidPrevError);
+
+
+	if (p_pidIntegState > p_integMax)
+	{
+		p_pidIntegState = p_integMax;
+	}
+	else if (p_pidIntegState < p_integMin)
+	{
+		p_pidIntegState = p_integMin;
+	}
+
+	//Calculate derivative response. (0.5 comes from the formula for the derivative. 
+	p_pidDeriv = Angle_D_Gain * ((p_pidError - p_pidPrevError) / 0.5);
+
+	//Calculate final pid output.
+	p_pidOutput = p_pidProp + p_pidIntegState + p_pidDeriv;
+
+	//Remember previous values.
+	p_pidPrevError = p_pidError;
+	p_pidPrevDPS = currentAngle;
+}
+

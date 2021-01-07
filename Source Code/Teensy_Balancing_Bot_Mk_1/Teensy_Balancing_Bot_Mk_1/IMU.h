@@ -86,7 +86,7 @@ private:
 public:
 	IMU(Adafruit_SSD1306* disp, byte useDisp);
 	void Ctor();
-	void IMUInit();
+	void Init();
 	void RegisterInit();
 	void GyroCalib();
 	void readRawGyro();
