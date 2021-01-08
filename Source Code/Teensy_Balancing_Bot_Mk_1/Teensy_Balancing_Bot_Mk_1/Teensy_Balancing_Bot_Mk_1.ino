@@ -50,18 +50,18 @@ void AnglePIDUpdate(float currentAngle);
 void PositionPIDUpdate(float currentPosition);
 
 //Angle PID variables
-float p_pidSetpoint = 0;
-float p_pidError = 0;
-float p_pidPrevError = 0;
-float p_pidPrevDPS = 0;
+float a_pidSetpoint = 0;
+float a_pidError = 0;
+float a_pidPrevError = 0;
+float a_pidPrevDPS = 0;
 
-float p_pidProp = 0;
+float a_pidProp = 0;
 
-float p_pidDeriv = 0;
-float p_pidInteg = 0;
+float a_pidDeriv = 0;
+float a_pidInteg = 0;
 
-float p_pidIntegState = 0;
-float p_pidOutput = 0;
+float a_pidIntegState = 0;
+float a_pidOutput = 0;
 
 //Position PID variables
 float p_pidSetpoint = 0;
@@ -82,9 +82,10 @@ float p_pidOutput = 0;
 float requiredMotorSpeed = 0;
 
 
-uint16_t currentPosition = 0;
+int16_t currentPosition = 0;
 float currentAngle = 0;
 
+int16_t prevTime = 0;
 byte measuredAngleIsNegative;
 
 CytronMD motor1(PWM_DIR, 2, 3);
@@ -92,46 +93,54 @@ CytronMD motor2(PWM_DIR, 4, 5);
 
 Adafruit_SSD1306 currentDisplay = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 IMU currentIMU = IMU(&currentDisplay, true);
+AngleM currentAngleMeasurment = AngleM(1, &currentDisplay);
+Encoder leftEncoder = Encoder(9, 10);
+Encoder rightEncoder = Encoder(11, 12);
 
 void setup() {
 	currentIMU.Init();
+	leftEncoder.init();
+	rightEncoder.init();
 }
 
 // the loop function runs over and over again until power down or reset
 void loop() {
+	prevTime = micros();
 
+	a_pidSetpoint = 0;
+	currentAngle = currentAngleMeasurment.GetCurrentAngles()[1];
 }
 
-void AnglePIDUpdate(float currentAngle)
+void AnglePIDUpdate()
 {
 	//Calculate the current error.
-	p_pidError = abs(p_pidSetpoint - abs(currentAngle));
+	a_pidError = abs(a_pidSetpoint - abs(currentAngle));
 
 	//Calculate proportional response.
-	p_pidProp = Angle_P_Gain * p_pidError;
+	a_pidProp = Angle_P_Gain * p_pidError;
 
 	//Calculate integral response.
-	p_pidIntegState = p_pidIntegState + 0.5 * Angle_I_Gain * pidSampleTime * (p_pidError + p_pidPrevError);
+	a_pidIntegState =a_pidIntegState + 0.5 * Angle_I_Gain * pidSampleTime * (a_pidError + a_pidPrevError);
 
 
 	if (p_pidIntegState > p_integMax)
 	{
 		p_pidIntegState = p_integMax;
 	}
-	else if (p_pidIntegState < p_integMin)
+	else if (a_pidIntegState < p_integMin)
 	{
-		p_pidIntegState = p_integMin;
+		a_pidIntegState = p_integMin;
 	}
 
 	//Calculate derivative response. (0.5 comes from the formula for the derivative. 
-	p_pidDeriv = Angle_D_Gain * ((p_pidError - p_pidPrevError) / 0.5);
+	a_pidDeriv = Angle_D_Gain * ((a_pidError - a_pidPrevError) / 0.5);
 
 	//Calculate final pid output.
-	p_pidOutput = p_pidProp + p_pidIntegState + p_pidDeriv;
+	a_pidOutput = a_pidProp + a_pidIntegState + a_pidDeriv;
 
 	//Remember previous values.
-	p_pidPrevError = p_pidError;
-	p_pidPrevDPS = currentAngle;
+	a_pidPrevError = a_pidError;
+	a_pidPrevDPS = currentAngle;
 }
 
 void PositionPIDUpdate(float currentPosition)

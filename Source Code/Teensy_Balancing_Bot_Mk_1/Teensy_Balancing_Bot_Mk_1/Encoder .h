@@ -14,8 +14,8 @@ private:
 	bool pin1High;
 	bool pin2High;
 
-	int16_t numberOfRevolutions = 0;
-	int16_t prevNumberOfRevolutions = 0;
+	int16_t numberOfTicks = 0;
+	int16_t prevNumberOfTicks = 0;
 
 	bool isGoingForward;
 	static Encoder* current_obj;

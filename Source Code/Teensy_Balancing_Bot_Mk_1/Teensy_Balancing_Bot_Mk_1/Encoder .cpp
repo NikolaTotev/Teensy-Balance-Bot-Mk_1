@@ -17,6 +17,12 @@ void Encoder::pinChangeISR()
 	current_obj->processPinChangeISR();
 }
 
+int16_t Encoder::getTicks()
+{
+	return numberOfTicks;
+}
+
+
 void Encoder::processPinChangeISR()
 {
 	if (digitalReadFast(pin1) == HIGH)
@@ -39,21 +45,21 @@ void Encoder::processPinChangeISR()
 
 	if (pin1High == pin2High)
 	{
-		numberOfRevolutions++;
+		numberOfTicks++;
 	}
 	else
 	{
-		numberOfRevolutions--;
+		numberOfTicks--;
 	}
 
-	if (numberOfRevolutions < prevNumberOfRevolutions)
+	if (numberOfTicks < prevNumberOfTicks)
 	{
 		if (useSerialDebug)
 		{
 			Serial.print("Count: ");
-			Serial.print(numberOfRevolutions);
+			Serial.print(numberOfTicks);
 			Serial.print(" Prev Count: ");
-			Serial.print(prevNumberOfRevolutions);
+			Serial.print(prevNumberOfTicks);
 			Serial.print(" Pin 9:");
 			Serial.print(pin1High);
 			Serial.print(" Pin 10:");
@@ -68,9 +74,9 @@ void Encoder::processPinChangeISR()
 		if (useSerialDebug)
 		{
 			Serial.print("Count: ");
-			Serial.print(numberOfRevolutions);
+			Serial.print(numberOfTicks);
 			Serial.print(" Prev Count: ");
-			Serial.print(prevNumberOfRevolutions);
+			Serial.print(prevNumberOfTicks);
 			Serial.print(" Pin 9:");
 			Serial.print(pin1High);
 			Serial.print(" Pin 10:");
@@ -80,7 +86,7 @@ void Encoder::processPinChangeISR()
 		isGoingForward = false;
 	}
 
-	prevNumberOfRevolutions = numberOfRevolutions;
+	prevNumberOfTicks = numberOfTicks;
 }
 
 
