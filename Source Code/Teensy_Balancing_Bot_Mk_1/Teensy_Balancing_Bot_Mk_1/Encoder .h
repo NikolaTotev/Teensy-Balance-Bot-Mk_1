@@ -36,6 +36,7 @@ public:
 	void init();
 	void processPinChangeISR();
 	static void pinChangeISR();
+	int16_t getTicks();
 };
 #else
 	#include "WProgram.h"

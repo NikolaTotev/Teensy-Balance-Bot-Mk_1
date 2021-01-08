@@ -44,7 +44,9 @@ class Position
 public:
 	//This void is called by the main program loop.
 	void Update();
-	float GetEstimatedPosition();
+	
+	float GetLeftEstimagedDistance();
+	float GetRighttEstimagedDistance();
 	int16_t RW_GetEstimatedPosition();
 	int16_t LW_GetEstimatedPosition();
 

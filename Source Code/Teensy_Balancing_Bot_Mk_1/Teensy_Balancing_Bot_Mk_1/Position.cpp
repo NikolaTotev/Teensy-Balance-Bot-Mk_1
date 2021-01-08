@@ -4,10 +4,16 @@
 
 #include "Position.h"
 
-int Position::GetEstimatedPosition()
+float Position::GetLeftEstimagedDistance()
 {
-	
+	return leftDistanceTraveled;
 }
+
+float Position::GetRighttEstimagedDistance()
+{
+	return rightDistanceTraveled;
+}
+
 
 void Position::Update()
 {
@@ -26,7 +32,7 @@ void Position::calcRevolutions()
 	leftWheelPosition = 1 * leftEncoderTicks;
 	rightWheelPosition = 1 * leftEncoderTicks;
 
-	if(leftWheelPosition > prevLeftDistanceTraveled)
+	if(leftWheelPosition > prevLeftWheelPosition)
 	{
 		leftMovingForward = true;
 	}
@@ -35,8 +41,8 @@ void Position::calcRevolutions()
 		leftMovingForward = false;
 	}
 
-
-	if (rightWheelPosition > prevRightDistanceTraveled)
+	//Set direction of right wheel.
+	if (rightWheelPosition > prevRightWheelPosition)
 	{
 		rightMovingForward = true;
 	}

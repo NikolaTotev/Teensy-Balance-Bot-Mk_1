@@ -46,8 +46,8 @@ float Pos_I_Gain = 0;
 #define pidSampleTimeMircos 3200 //500000
 
 void PIDInit();
-void AnglePIDUpdate(float currentAngle);
-void PositionPIDUpdate(float currentPosition);
+void AnglePIDUpdate();
+void PositionPIDUpdate();
 
 //Angle PID variables
 float a_pidSetpoint = 0;
@@ -97,6 +97,7 @@ AngleM currentAngleMeasurment = AngleM(1, &currentDisplay);
 Encoder leftEncoder = Encoder(9, 10);
 Encoder rightEncoder = Encoder(11, 12);
 
+void UpdateMotorSpeed(int16_t motor1Speed, int16_t motor2Speed);
 void setup() {
 	currentIMU.Init();
 	leftEncoder.init();
@@ -109,6 +110,9 @@ void loop() {
 
 	a_pidSetpoint = 0;
 	currentAngle = currentAngleMeasurment.GetCurrentAngles()[1];
+	AnglePIDUpdate();
+	UpdateMotorSpeed(a_pidOutput, a_pidOutput);
+	
 }
 
 void AnglePIDUpdate()
@@ -143,10 +147,10 @@ void AnglePIDUpdate()
 	a_pidPrevDPS = currentAngle;
 }
 
-void PositionPIDUpdate(float currentPosition)
+void PositionPIDUpdate()
 {
 	//Calculate the current error.
-	p_pidError = abs(p_pidSetpoint - abs(currentAngle));
+	p_pidError = abs(p_pidSetpoint - abs(currentPosition));
 
 	//Calculate proportional response.
 	p_pidProp = Angle_P_Gain * p_pidError;
@@ -173,5 +177,11 @@ void PositionPIDUpdate(float currentPosition)
 	//Remember previous values.
 	p_pidPrevError = p_pidError;
 	p_pidPrevDPS = currentAngle;
+}
+
+void UpdateMotorSpeed(int16_t motor1Speed, int16_t motor2Speed)
+{
+	motor1.setSpeed(motor1Speed);
+	motor2.setSpeed(motor2Speed);
 }
 

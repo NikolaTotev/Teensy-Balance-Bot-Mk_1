@@ -140,10 +140,10 @@ void setup() {
 
 // the loop function runs over and over again until power down or reset
 void loop() {
-	motor1.setSpeed(110);   // Motor 1 runs forward at 50% speed.
-	//motor2.setSpeed(-128);  // Motor 2 runs backward at 50% speed.
+	motor1.setSpeed(100);   // Motor 1 runs forward at 50% speed.
+	//motor2.setSpeed(100);  // Motor 2 runs backward at 50% speed.
 	delay(15000);
 
-	motor1.setSpeed(-120);
+	motor1.setSpeed(100);
 	delay(1000);
 }
