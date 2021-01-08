@@ -14,9 +14,14 @@ private:
 	bool pin1High;
 	bool pin2High;
 
-	uint16_t wheelRevolutions;
+	int16_t numberOfRevolutions = 0;
+	int16_t prevNumberOfRevolutions = 0;
+
 	bool isGoingForward;
 	static Encoder* current_obj;
+
+	//ToDo: Set this flag to false;
+	byte useSerialDebug = true;
 
 	
 public:
