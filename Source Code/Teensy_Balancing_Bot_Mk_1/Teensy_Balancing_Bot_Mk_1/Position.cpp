@@ -23,14 +23,14 @@ void Position::Update()
 
 void Position::calcRevolutions()
 {
-	int16_t leftEncoderTicks = leftEncoder->getTicks();
-	int16_t rightEncoderTicks = rightEncoder->getTicks();
+	int16_t leftEncoderTicks = encoders->getLeftTicks();
+	int16_t rightEncoderTicks = encoders->getRightTicks();
 
 	prevLeftWheelPosition = leftWheelPosition;
 	prevRightWheelPosition = rightWheelPosition;
 
 	leftWheelPosition = 1 * leftEncoderTicks;
-	rightWheelPosition = 1 * leftEncoderTicks;
+	rightWheelPosition = 1 * rightEncoderTicks;
 
 	if(leftWheelPosition > prevLeftWheelPosition)
 	{

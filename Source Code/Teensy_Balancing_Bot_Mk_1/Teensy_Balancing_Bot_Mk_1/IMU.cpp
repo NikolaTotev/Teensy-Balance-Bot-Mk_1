@@ -132,7 +132,7 @@ void IMU::Init()
 
 }
 
-void RegisterInit()
+void IMU::RegisterInit()
 {
 	i2c_registerWrite(Reg_Ctrl2_G, Gyro_ODR, I2C_Addr);
 	i2c_registerWrite(Reg_Ctrl1_XL, Accel_ODR, I2C_Addr);

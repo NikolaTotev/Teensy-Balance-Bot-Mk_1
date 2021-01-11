@@ -5,13 +5,16 @@
 */
 
 // the setup function runs once when you press reset or power the board
+#include "MDD3A_Lib.h"
 #include <WireKinetis.h>
 #include <WireIMXRT.h>
 #include <Wire.h>
 #include "i2c_utils.h"
 #include <CytronMotorDriver.h>
-CytronMD motor1(PWM_DIR, 2, 3);
-//CytronMD motor2(PWM_DIR, 4, 5);
+
+
+MDD3A motor1(2, 3);
+MDD3A motor2(4, 5);
 
 bool pin9High = false;
 bool pin10High = false;
@@ -44,7 +47,7 @@ void pinChanceEncoder1ISR()
 		pin10High = false;
 	}
 
-	if(pin9High == pin10High)
+	if (pin9High == pin10High)
 	{
 		encoder1Count++;
 	}
@@ -53,7 +56,7 @@ void pinChanceEncoder1ISR()
 		encoder1Count--;
 	}
 
-	if(encoder1Count < prevEncoder1Count)
+	if (encoder1Count < prevEncoder1Count)
 	{
 		Serial.print("Count: ");
 		Serial.print(encoder1Count);
@@ -64,7 +67,7 @@ void pinChanceEncoder1ISR()
 		Serial.print(" Pin 10:");
 		Serial.print(pin10High);
 		Serial.print(" Encoder 1 Direction: FWD \n");
-		
+
 	}
 	else
 	{
@@ -120,7 +123,7 @@ void pinChanceEncoder2ISR()
 		Serial.println("Encoder 2 Direction: REV");
 	}
 
-	
+
 }
 
 
@@ -132,18 +135,27 @@ void setup() {
 	pinMode(11, INPUT);
 	pinMode(12, INPUT);
 
-
-	attachInterrupt(10, pinChanceEncoder1ISR, RISING);
-	attachInterrupt(12, pinChanceEncoder2ISR, CHANGE);
+	Serial.begin(9600);
+	//attachInterrupt(10, pinChanceEncoder1ISR, RISING);
+	//attachInterrupt(12, pinChanceEncoder2ISR, CHANGE);
 }
 
-
+int speed = 100;
 // the loop function runs over and over again until power down or reset
 void loop() {
-	motor1.setSpeed(100);   // Motor 1 runs forward at 50% speed.
-	//motor2.setSpeed(100);  // Motor 2 runs backward at 50% speed.
-	delay(15000);
+	//for (int i = 0; i < 100; ++i)
+	//{
+	//	speed++;
+	//	motor1.setSpeed(-speed);
+	//	delay(500);// Motor 1 runs forward at 50% speed.
+	//}
+	//delay(2000);
+	//motor1.setSpeed(0);   // Motor 1 runs forward at 50% speed.
+	////motor2.setSpeed(-250);  // Motor 2 runs backward at 50% speed.
+	//delay(1000);
+	//speed = 0;
 
-	motor1.setSpeed(100);
-	delay(1000);
+	motor1.setSpeed(1, FWD);   // Motor 1 runs forward at 50% speed.
+	//motor2.setSpeed(-100);  // Motor 2 runs backward at 50% speed.
+	//delay(1000);
 }

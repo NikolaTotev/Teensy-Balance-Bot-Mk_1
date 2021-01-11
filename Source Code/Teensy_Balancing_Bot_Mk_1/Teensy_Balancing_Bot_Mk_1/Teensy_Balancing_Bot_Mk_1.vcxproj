@@ -121,7 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AngleMeasurement.h" />
-    <ClInclude Include="Encoder .h" />
+    <ClInclude Include="Encoder.h" />
     <ClInclude Include="i2c_utils.h" />
     <ClInclude Include="IMU.h" />
     <ClInclude Include="Position.h" />

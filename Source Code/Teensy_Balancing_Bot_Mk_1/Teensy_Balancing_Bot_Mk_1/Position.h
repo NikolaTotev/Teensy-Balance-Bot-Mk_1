@@ -5,6 +5,14 @@
 
 #if defined(ARDUINO) && ARDUINO >= 100
 #include "arduino.h"
+#include "Encoder_Lib.h"
+
+enum SelectSide
+{
+	R,
+	L
+};
+
 class Position
 {
 
@@ -28,20 +36,16 @@ class Position
 	bool rightMovingForward = false;
 	bool leftMovingForward = false;
 
-	Encoder* leftEncoder;
-	Encoder* rightEncoder;
+	Encoder *encoders;
 
-
-	Position(Encoder* lEncoder, Encoder* rEncoder)
-	{
-		leftEncoder = lEncoder;
-		rightEncoder = rEncoder;
-	}
-
-
+	public:
 	void calcRevolutions();
 	void calcTravelDistance();
-public:
+
+	Position(Encoder *encs)
+	{
+		encoders = encs;	
+	}
 	//This void is called by the main program loop.
 	void Update();
 	
