@@ -31,7 +31,7 @@ private:
 	static Encoder* current_obj;
 
 	//ToDo: Set this flag to false;
-	byte useSerialDebug = true;
+	byte useSerialDebug = false;
 
 public:
 	Encoder(uint16_t encPin1, uint16_t encPin2, uint16_t encPin3, uint16_t encPin4)
@@ -50,6 +50,7 @@ public:
 	static void rightPinChangeISR();
 	int16_t getLeftTicks();
 	int16_t getRightTicks();
+	void reset();
 };
 #else
 	#include "WProgram.h"

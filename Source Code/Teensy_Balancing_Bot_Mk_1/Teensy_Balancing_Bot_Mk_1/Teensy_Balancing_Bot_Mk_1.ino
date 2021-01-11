@@ -28,12 +28,12 @@
 // Reset pin # (or -1 if sharing Arduino reset pin)
 #define OLED_RESET 4 
 
-float Angle_P_Gain = 120;
+float Angle_P_Gain = 10;
 float Angle_D_Gain = 20;
 float Angle_I_Gain = 0.01;
 
 float Pos_P_Gain = 1;
-float Pos_D_Gain = 0;
+float Pos_D_Gain = 0.5;
 float Pos_I_Gain = 0;
 
 //Integrator anti-windup limits
@@ -41,9 +41,12 @@ float Pos_I_Gain = 0;
 #define p_integMin -10
 
 
-//PID time constants
-#define pidSampleTime 0.0014f //0.5 //In seconds
-#define pidSampleTimeMircos 1400//500000
+////PID time constants
+//#define pidSampleTime 0.0014f //0.5 //In seconds
+//#define pidSampleTimeMircos 1400//500000
+
+#define pidSampleTime 0.0150f //0.5 //In seconds
+#define pidSampleTimeMircos 15000//500000
 
 void PIDInit();
 void AnglePIDUpdate();
@@ -139,6 +142,7 @@ void setup() {
 
 // the loop function runs over and over again until power down or reset
 SelectSide currentSide = L;
+byte useDebug = false;
 void loop() {
 	prevTime = micros();
 
@@ -158,7 +162,15 @@ void loop() {
 	default:;
 	}
 	PositionPIDUpdate();
-	a_pidSetpoint += p_pidOutput;
+	if(currentPosition < 0)
+	{
+		a_pidSetpoint -= p_pidOutput;
+	}
+	else
+	{
+		a_pidSetpoint += p_pidOutput;
+	}
+	
 	currentAngle = currentAngleMeasurment.GetCurrentAngles()[0];
 	AnglePIDUpdate();
 
@@ -174,20 +186,25 @@ void loop() {
 		UpdateMotorSpeed(motorOut, motorOut, REV);
 	}
 
+	if (useDebug)
+	{
 
-	currentDisplay.clearDisplay();
-	currentDisplay.setCursor(0, 0);
-	currentDisplay.setTextSize(1);// Draw 2X-scale text
-	currentDisplay.setTextColor(SSD1306_WHITE);
-	currentDisplay.print("PID Output: ");
-	currentDisplay.println(a_pidOutput);
-	currentDisplay.print("Angle: ");
-	currentDisplay.println(currentAngle);
-	currentDisplay.print("Motor Output: ");
-	currentDisplay.println(motorOut);
-	currentDisplay.print("P: ");
-	currentDisplay.print(currentPosition);
-	currentDisplay.display();
+		currentDisplay.clearDisplay();
+		currentDisplay.setCursor(0, 0);
+		currentDisplay.setTextSize(1);// Draw 2X-scale text
+		currentDisplay.setTextColor(SSD1306_WHITE);
+		currentDisplay.print("PID Output: ");
+		currentDisplay.println(a_pidOutput);
+		currentDisplay.print("Angle: ");
+		currentDisplay.println(currentAngle);
+		currentDisplay.print("Motor Output: ");
+		currentDisplay.println(motorOut);
+		currentDisplay.print("P: ");
+		currentDisplay.print(currentPosition);
+		currentDisplay.print(" P: ");
+		currentDisplay.print(p_pidOutput);
+		currentDisplay.display();
+	}
 
 	int16_t loopTime = micros() - prevTime;
 	//Serial.println(loopTime);
@@ -254,7 +271,7 @@ void PositionPIDUpdate()
 
 	//Remember previous values.
 	p_pidPrevError = p_pidError;
-	p_pidPrevDPS = currentAngle;
+	p_pidPrevDPS = currentPosition;
 }
 
 void UpdateMotorSpeed(int16_t motor1Speed, int16_t motor2Speed, Direction dir)

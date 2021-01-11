@@ -168,4 +168,10 @@ void Encoder::processRightPinChangeISR()
 	prevNumberOfTicksRight = numberOfTicksRight;
 }
 
+void Encoder::reset()
+{
+	numberOfTicksLeft = 0;
+	numberOfTicksRight = 0;
+}
+
 

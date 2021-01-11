@@ -26,6 +26,11 @@ void Position::calcRevolutions()
 	int16_t leftEncoderTicks = encoders->getLeftTicks();
 	int16_t rightEncoderTicks = encoders->getRightTicks();
 
+	if(leftEncoderTicks >= 5||rightEncoderTicks >= 5)
+	{
+		encoders->reset();
+	}
+
 	prevLeftWheelPosition = leftWheelPosition;
 	prevRightWheelPosition = rightWheelPosition;
 
