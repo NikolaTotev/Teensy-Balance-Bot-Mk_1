@@ -24,7 +24,7 @@ B = [0; 0; 1/mc; 1/(L*mc)];
 
 %% Output
 C = [1 0 0 0]; %q1 as input (position of the cart
-D = 0
+D = 0;
 
 %% Sys build
 sys = ss(A, B, C, D)
@@ -33,7 +33,12 @@ eig(A)
 %% Sys analysis 
 
 pole(sys) %Either of the two commands find the poles of the system. We do this to check if the system is stable or not
-ControlabilityMatrix = ctrb(sys) 
+
+sys = ss(A, B, C, D);
+ControlabilityMatrix = ctrb(sys);
+rank(ControlabilityMatrix)
+
+
 ObvservabilityMatrix = obsv(sys)
 
 rank(ControlabilityMatrix) %Rank must be 4 otherwise the system is not controlable

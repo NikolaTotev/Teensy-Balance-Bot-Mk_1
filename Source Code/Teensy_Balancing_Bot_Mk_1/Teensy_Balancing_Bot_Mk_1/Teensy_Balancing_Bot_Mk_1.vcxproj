@@ -121,17 +121,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AngleMeasurement.h" />
-    <ClInclude Include="Encoder.h" />
+    <ClInclude Include="Encoder_Lib.h" />
     <ClInclude Include="i2c_utils.h" />
     <ClInclude Include="IMU.h" />
+    <ClInclude Include="MDD3A_Lib.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="__vm\.Teensy_Balancing_Bot_Mk_1.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngleMeasurement.cpp" />
-    <ClCompile Include="Encoder .cpp" />
+    <ClCompile Include="Encoder_Lib.cpp" />
     <ClCompile Include="i2c_utils.cpp" />
     <ClCompile Include="IMU.cpp" />
+    <ClCompile Include="MDD3A_Lib.cpp" />
     <ClCompile Include="Position.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

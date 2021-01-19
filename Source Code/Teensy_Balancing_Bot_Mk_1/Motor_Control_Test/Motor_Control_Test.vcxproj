@@ -119,10 +119,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="i2c_utils.h" />
+    <ClInclude Include="MDD3A_Lib.h" />
     <ClInclude Include="__vm\.Motor_Control_Test.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="i2c_utils.cpp" />
+    <ClCompile Include="MDD3A_Lib.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

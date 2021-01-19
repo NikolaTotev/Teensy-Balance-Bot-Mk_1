@@ -27,9 +27,15 @@
     <ClInclude Include="i2c_utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MDD3A_Lib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="i2c_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MDD3A_Lib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
