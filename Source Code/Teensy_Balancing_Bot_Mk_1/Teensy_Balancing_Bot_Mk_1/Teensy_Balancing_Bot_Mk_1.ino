@@ -28,9 +28,9 @@
 // Reset pin # (or -1 if sharing Arduino reset pin)
 #define OLED_RESET 4 
 
-float Angle_P_Gain = 10;
-float Angle_D_Gain = 20;
-float Angle_I_Gain = 0.01;
+float Angle_P_Gain = 15; // 10
+float Angle_D_Gain = 30; // 20
+float Angle_I_Gain = 0; //0.01
 
 float Pos_P_Gain = 1;
 float Pos_D_Gain = 0.5;
@@ -45,7 +45,7 @@ float Pos_I_Gain = 0;
 //#define pidSampleTime 0.0014f //0.5 //In seconds
 //#define pidSampleTimeMircos 1400//500000
 
-#define pidSampleTime 0.0150f //0.5 //In seconds
+#define pidSampleTime 0.0150f //0.015 //In seconds
 #define pidSampleTimeMircos 15000//500000
 
 void PIDInit();

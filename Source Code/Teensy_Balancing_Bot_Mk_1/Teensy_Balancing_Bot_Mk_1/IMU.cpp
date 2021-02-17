@@ -19,9 +19,11 @@ void IMU::TestIMU()
 	//Check if sensor hardware is working;
 	uint8_t sensorReadCheck;
 	i2c_requestRegisters(Reg_Who_Am_I, 1, I2C_Addr);
-
 	while (i2c_poll() < 1)
-		;
+	{
+		Serial.println("Waiting for IMU");
+		delay(500);
+	}
 
 	sensorReadCheck = i2c_readByte();
 
