@@ -141,7 +141,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties config.Debug.customdebug_teensy41_debugger_type="universal" />
+      <UserProperties arduino.upload.port="COM3" config.Debug.customdebug_teensy41_debugger_type="universal" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
